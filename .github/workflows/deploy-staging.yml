@@ -1,0 +1,30 @@
+# Nombre que veremos en la pestaña GitHub Actions.
+name: Stage the app
+
+
+# Define CUÁNDO se ejecutará el workflow.
+on:
+
+  # Escuchamos eventos relacionados con Pull Requests.
+  pull_request:
+
+    # Pero concretamente solo nos interesa
+    # cuando alguien añade un label a la Pull Request.
+    types: [labeled]
+
+
+# Trabajos disponibles dentro del workflow.
+jobs:
+
+  # Identificador del job.
+  build:
+
+    # Máquina donde se ejecutaría el job.
+    runs-on: ubuntu-latest
+
+
+    # CONDICIÓN:
+    # El workflow puede activarse al añadir cualquier label,
+    # pero este job solo se ejecutará si entre los labels
+    # de la Pull Request existe uno llamado exactamente "stage".
+    if: contains(github.event.pull_request.labels.*.name, 'stage')
